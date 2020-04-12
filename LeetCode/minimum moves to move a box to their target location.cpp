@@ -1,6 +1,8 @@
 #define N 25
 #define MM 1000
 int dp[N][N];
+int mnn[N][N];
+int done[N][N];
 int n,m;
 
 int check(int vv,int hh,pair<int,int> hum, pair<int,int> box,vector<vector<char>>& grid)
@@ -55,6 +57,8 @@ public:
         for(int i=0;i<N;i++){
             for(int j=0;j<N;j++){
                 dp[i][j]=1000;
+                mnn[i][j]=1000;
+                done[i][j]=0;
             }
         }
 
@@ -84,33 +88,54 @@ public:
             pair<int,int> hum=human.front();
             q.pop();
             human.pop();
+            
 
             int v=cur.first,h=cur.second;
-            if(h>0 && dp[v][h-1]==MM && grid[v][h-1]!='#' && check(v,h+1,hum,cur,grid)){
+            int newPath=0;
+            if(done[v][h])continue;
+            if(h>0 && done[v][h-1]==0 && grid[v][h-1]!='#' && check(v,h+1,hum,cur,grid)){
+                if(dp[v][h-1]==MM)newPath=1;
                 dp[v][h-1]=1+dp[v][h];
+                mnn[v][h-1]=min(mnn[v][h-1],dp[v][h-1]);
                 q.push(make_pair(v,h-1));
                 human.push(make_pair(v,h));
+
             }
-            if(v>0 && dp[v-1][h]==MM && grid[v-1][h]!='#' && check(v+1,h,hum,cur,grid)){
+            if(v>0 && done[v-1][h]==0 && grid[v-1][h]!='#' && check(v+1,h,hum,cur,grid)){
+                if(dp[v-1][h]==MM)newPath=1;
                 dp[v-1][h]=1+dp[v][h];
+                mnn[v-1][h]=min(mnn[v-1][h],dp[v-1][h]);
                 q.push(make_pair(v-1,h));
                 human.push(make_pair(v,h));
+
             }
-            if(h<(m-1) && dp[v][h+1]==MM && grid[v][h+1]!='#' && check(v,h-1,hum,cur,grid)){
+            if(h<(m-1) && done[v][h+1]==0 && grid[v][h+1]!='#' && check(v,h-1,hum,cur,grid)){
+                if(dp[v][h+1]==MM)newPath=1;
                 dp[v][h+1]=1+dp[v][h];
+                mnn[v][h+1]=min(mnn[v][h+1],dp[v][h+1]);
                 q.push(make_pair(v,h+1));
                 human.push(make_pair(v,h));
+
             }
-            if(v<(n-1) && dp[v+1][h]==MM && grid[v+1][h]!='#' && check(v-1,h,hum,cur,grid)){
+            if(v<(n-1) && done[v+1][h]==0 && grid[v+1][h]!='#' && check(v-1,h,hum,cur,grid)){
+                if(dp[v+1][h]==MM)newPath=1;
                 dp[v+1][h]=1+dp[v][h];
+                mnn[v+1][h]=min(mnn[v+1][h],dp[v+1][h]);
                 q.push(make_pair(v+1,h));
                 human.push(make_pair(v,h));
+
             }
+            int sideCheck=0;
+                 if(v>0 && dp[v-1][h]==MM && grid[v-1][h]!='#')sideCheck=1;
+            else if(h>0 && dp[v][h-1]==MM && grid[v][h-1]!='#')sideCheck=1;
+            else if(h+1<m && dp[v][h+1]==MM && grid[v][h+1]!='#')sideCheck=1;
+            else if(v+1<n && dp[v+1][h]==MM && grid[v+1][h]!='#')sideCheck=1;
+            
+            if(!newPath || !sideCheck)done[v][h]=1;
         }
 
-        int ans=dp[posT.first][posT.second];
+        int ans=mnn[posT.first][posT.second];
         if(ans==MM)return -1;
         return ans;
     }
 };
-
