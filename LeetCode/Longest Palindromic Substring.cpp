@@ -1,4 +1,5 @@
-//////////// solution 1: DP
+//////////// solution 1: DP ,complexity O(n^2) 
+//////////// There is also O(n) solution using  Manacher's Algorithm.
 #define N 1005
 
 int dp[N][N];
