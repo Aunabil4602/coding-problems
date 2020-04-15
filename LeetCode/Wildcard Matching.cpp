@@ -1,3 +1,5 @@
+///////////////////////// This is O(s*p) solution... there is also (s+p) solution using two pointers. 
+
 class Solution {
 public:
     bool isMatch(string s, string p) {
