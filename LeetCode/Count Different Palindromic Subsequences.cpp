@@ -1,7 +1,6 @@
-/////////////////////// n=S.legnth() , completxity max( O(n^2) , O(n*26) ) 
-/////////////////////// better explanation https://zxi.mytechroad.com/blog/dynamic-programming/leetcode-730-count-different-palindromic-subsequences/
-////////////////////// used another dp to find out the leftmost and rightmost positions of a character...
-//////////////////////                    ...in a range in O(1), it took (n*26) to build the dp.
+// n=S.legnth() , completxity max( O(n^2) , O(n*26) ) 
+// better explanation https://zxi.mytechroad.com/blog/dynamic-programming/leetcode-730-count-different-palindromic-subsequences/
+// used another dp to find out the leftmost and rightmost positions of a character in a range in O(1), it took O(n*26) to build the dp.
 
 #define LL long long
 class Solution {
