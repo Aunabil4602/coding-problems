@@ -1,5 +1,7 @@
-class Solution {
-public:
+/////////////// There is O(n) solution using conbinations = (2*n)C2 x (2*n-2)C2 x (2*n-4)C2 ........ = (n!)/ 2^(n-1)
+
+class Solution {  ////////// this is O(n^2) solution using dp
+ public:
     int countOrders(int n) {
         n<<=1;
         long long dp[n+1][n+1];
