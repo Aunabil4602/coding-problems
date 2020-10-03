@@ -1,0 +1,13 @@
+#include<bits/stdc++.h>
+
+class Solution {
+public:
+    int findPairs(vector<int>& nums, int k) {
+        unordered_map<int,int> dp;
+        set<int> uni;
+        int ans=0;
+        for(auto x:nums)uni.insert(x),dp[x]++;
+        for(auto x:uni)ans+=(dp[x+k])>(0+(k==0));
+        return ans;
+    }
+};
