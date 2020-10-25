@@ -19,3 +19,31 @@ public:
         return -1;
     }
 };
+
+
+class Solution {
+public:
+    int search(vector<int>& nums, int target) {
+        
+        if(nums.size()==0)return -1;
+        int quad=nums[0]<=target;
+        int L=0,R=nums.size()-1;
+        int mid,mid_q;
+        while(L<=R){
+            mid=L+(R-L)/2;
+            
+            if (nums[mid]==target)return mid;
+            mid_q=nums[0]<=nums[mid];
+            
+            if(quad==mid_q){
+                if(target<nums[mid])R=mid-1;
+                else L=mid+1;
+            }
+            else {
+                if(quad)R=mid-1;
+                else L=mid+1;
+            } 
+        }
+        return -1;
+    }
+};
